@@ -37,7 +37,6 @@ class LogRegress:
         return dJ.squeeze()
 
     def gradient_descent(self, X:np.ndarray, y:np.ndarray):
-        X = np.c_[np.ones(len(X),dtype='int64'), X]
         theta = np.zeros(X.shape[1])
         print(f'The total of training sample: {len(y)}')
         for i in range(self.iters):
@@ -55,7 +54,7 @@ class LogRegress:
         self.theta = self.gradient_descent(X, y)
 
     def predict(self, X:np.ndarray):
-        return np.array([0 if self.sigmoid(self.theta @ np.insert(Xi, 0, 1))
+        return np.array([0 if self.sigmoid(self.theta @ Xi)
                          < 0.5 else 1 for Xi in X])[:, None]
     
     def evaluate(self, y:np.ndarray, y_pred:np.ndarray):
